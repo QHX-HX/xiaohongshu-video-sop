@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 个人数据：官方后台导出数据、私有选题库、复盘报告不要上传
+notes.csv
+*-private*.csv
+report*.txt
