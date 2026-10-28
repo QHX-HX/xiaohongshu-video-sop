@@ -1,6 +1,6 @@
 ---
 name: xiaohongshu-video-sop
-description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个人成长领域的知识分享（口播 + 画面辅助 + 录屏讲解）。当用户需要：小红书起号、爆款选题、口播脚本创作、标题/文案生成、拍摄剪辑、发布复盘、长尾流量优化、多平台内容分发、构建 Obsidian 知识库，或制作 1-5 分钟知识类短视频时使用。内置合规本地脚本（选题打分、选题草稿、标题生成、官方导出数据复盘分析、Obsidian 批量归档）。触发词：小红书、起号、爆款、口播、知识类视频、选题、长尾流量、对标账号。
+description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个人成长领域的知识分享（口播 + 画面辅助 + 录屏讲解）。当用户需要：小红书起号、爆款选题、选题改造、口播脚本创作、标题/文案生成、拍摄剪辑、发布复盘、长尾流量优化、多平台内容分发、构建 Obsidian 知识库，或制作 1-5 分钟知识类短视频时使用。内置合规本地脚本（选题打分、选题草稿、标题生成、官方导出数据复盘分析、Obsidian 批量归档）。触发词：小红书、起号、爆款、口播、知识类视频、选题、长尾流量、对标账号。
 ---
 
 # 小红书知识输出类视频 SOP
@@ -27,9 +27,11 @@ description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个
 ### Step 2 选题（约 30 分钟）
 1. 围绕 4 大方向：认知颠覆 / 方法论 / 经验总结 / 行业洞察。
 2. 可用 `scripts/generate_topic_ideas.py` 生成选题草稿，再用 `scripts/score_topics.py` 打分。
-3. 传播可行性双层判断：4 条标准过完后，再用爆款 4 个必要条件（看得懂 / 链接大人群 / 满足点开需求 / 引发互动）过一遍；参考 `references/viral-content-patterns.md` 的三种爆款类型给选题定传播策略。
+3. **流量漏斗评估（决定流量上限）**：选题决定漏斗开口大小，开口窄则承接再好也接不住流量。先按两条核心标准自检——①降维打击（理解门槛低到尘埃里，把专业翻译成人话）②击穿情绪（剥离「事」上升到「情」，用情绪穿透圈层）。开口不够就套三个傻瓜式改造法：**私事公办**（我→我们，经历→观点）/ **痛点嫁接**（专业→大众焦虑）/ **极度反差**（强对比组合），详见 `references/traffic-funnel-topic-upgrade.md`。
+4. 传播可行性双层判断：4 条标准过完后，再用爆款 4 个必要条件（看得懂 / 链接大人群 / 满足点开需求 / 引发互动）过一遍；参考 `references/viral-content-patterns.md` 的三种爆款类型给选题定传播策略。
 4. 热点借势先过两道判断：有没有价值（与定位/人群相关）？能不能做（有独特角度还是纯跟风）？
-5. 产出一个「选题卡」（参考 `references/topic-database-template.md`）。
+5. **三问检测器把关**：定题/开拍前用三问自检——覆盖度（卖煎饼的大妈能听懂吗）/ 关联度（「这说的不就是我吗」）/ 情绪度（有生气/惊讶/想笑吗），任一 no 就回去重改；可用 `scripts/topic_gate_check.py` 留档。
+6. 产出一个「选题卡」（参考 `references/topic-database-template.md`，含漏斗开口与三问字段）。
 
 ### Step 3 知识梳理（30-60 分钟）
 用 `references/knowledge-card-template.md` 结构化：核心观点 → 关键概念 → 论证逻辑 → 方法论 → 金句。
@@ -60,6 +62,7 @@ description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个
 | `generate_topic_ideas.py` | 按领域+4 方向生成选题草稿 | `python scripts/generate_topic_ideas.py --domain 职场成长 --count 12` |
 | `score_topics.py` | 选题打分排序（信息差/实用/传播/特色） | `python scripts/score_topics.py --input topics.csv` |
 | `make_titles.py` | 按 5 大标题公式生成标题候选（含认知纠偏风格） | `python scripts/make_titles.py --keyword 向上管理 --count 8` |
+| `topic_gate_check.py` | 选题三问检测器（覆盖度/关联度/情绪度），输出 PASS/REVISE | `python scripts/topic_gate_check.py --topic "选题标题"` |
 | `analyze_exported_data.py` | 分析官方后台导出的笔记数据，输出复盘指标 | `python scripts/analyze_exported_data.py --input notes.csv` |
 | `build_obsidian_library.py` | 批量生成 Obsidian 选题/知识卡片笔记 | `python scripts/build_obsidian_library.py --type topic --input topics.csv --out vault/` |
 
@@ -74,6 +77,13 @@ description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个
 **传播机制层（能不能传开）**：看得懂 / 链接大人群 / 满足点开需求（情绪或信息）/ 引发互动；三种爆款类型（万古同悲 / 惊世骇俗 / 打破节奏）与适配度见 `references/viral-content-patterns.md`。
 
 > 平衡提醒：拆解给下限，积累给上限——方法论之外，网感靠日常训练（带目的刷 / 遮数据猜互动 / 模仿改写）。
+
+### 流量漏斗与选题命门
+> **选题定生死，内容定高低，算法当裁判，人性是核心。** 视频播放是漏斗，选题决定开口大小——开口窄，文案剪辑拍摄再好也接不住流量。
+
+- **好选题两条标准**：①降维打击——观众刷视频是省电模式，理解门槛必须低到尘埃里（把专业翻译成人话，讲人话不讲专业）；②击穿情绪——知识技能都有圈层，只有情绪能穿透壁垒，要剥离「事」上升到「情」（例：李子柒卖的不是腌酸菜，是逃离城市的向往）。
+- **三招撑大漏斗**：私事公办（我→我们，经历→观点，做千万人的嘴替）/ 痛点嫁接（专业话题嫁接到大众焦虑，卖欲望不卖技术）/ 极度反差（高预期 vs 低待遇，要么让人羡慕要么让人嫉妒，绝不能让人无感）。
+- **三问检测器**：覆盖度（大妈能听懂吗）/ 关联度（「这说的不就是我吗」）/ 情绪度（有生气/惊讶/想笑吗），任一 no 回改再拍。完整版见 `references/traffic-funnel-topic-upgrade.md`。
 
 ### 脚本时间结构
 ```
@@ -133,7 +143,8 @@ description: 小红书知识输出类视频 SOP 技能，专注职场/管理/个
 
 | 文件 | 用途 | 何时加载 |
 |------|------|----------|
-| `topic-criteria.md` | 选题判断标准与量化打分表 | 选题打分/决策时 |
+| `topic-criteria.md` | 选题判断标准：四条核心标准 + 漏斗开口层 + 三问门槛 + 量化打分表 | 选题打分/决策时 |
+| `traffic-funnel-topic-upgrade.md` | 流量漏斗选题法：两条核心标准 / 三招改造 / 三问检测器 / 误区对照 | 选题与改造时 |
 | `topic-database-template.md` | 选题库模板 | 记录选题时 |
 | `knowledge-card-template.md` | 知识卡片模板 | 知识梳理时 |
 | `case-database-template.md` | 案例库模板 | 积累/调用案例时 |
